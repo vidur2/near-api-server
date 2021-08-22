@@ -79,7 +79,7 @@ module.exports = {
 
     DeployContract: async function (account_id, private_key, contract_file) {
         try {
-            const path = `/home/pi/near-api-rest-server/contracts/${contract_file}`;
+            const path = `/home/pi/near-rest-api-server/contracts/nft_simple.wasm`;
             if (!fs.existsSync(path))
                 return api.reject("Contract not found");
 
