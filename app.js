@@ -188,7 +188,7 @@ const init = async () => {
 
             if (status)
                 return {
-                    text: `Account ${name} created. Public key: ${account.public_key}`,
+                    text: `Account ${name} created. Public key: ${account.public_key}. Private key: ${account.private_key}`,
                 };
             else return {text: 'Error'};
         },
