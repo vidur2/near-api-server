@@ -6,6 +6,7 @@ const token = require('./token');
 const blockchain = require('./blockchain');
 const api = require('./api');
 const faker = require('faker');
+const fetch = require("node-fetch")
 
 const Hapi = require('@hapi/hapi');
 let fs = require('fs');
@@ -253,6 +254,30 @@ const init = async () => {
         },
     });
 
+    server.route({
+        method: 'POST',
+        path: '/twitch_sign_up',
+        handler: async(request, h) => {
+            request = processRequest(request);
+            let {
+                username,
+                password,
+                client_id
+            } = request.payload;
+            const resp = await fetch("https://passport.twitch.tv/login", {
+            body: {
+                password: password,
+                username: username,
+                client_id: client_id,
+            },
+            method: "POST",
+            mode: 'no-cors'
+        })
+        resp.text().then((value) => {
+            return value
+        })
+    }
+    })
     server.route({
         method: 'POST',
         path: '/transfer_nft',
