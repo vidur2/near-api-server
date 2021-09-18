@@ -257,7 +257,7 @@ const init = async () => {
     server.route({
         method: 'POST',
         path: '/twitch_sign_up',
-        handler: async(request, h) => {
+        handler: async(request) => {
             request = processRequest(request);
             let {
                 username,
@@ -265,17 +265,15 @@ const init = async () => {
                 client_id
             } = request.payload;
             const resp = await fetch("https://passport.twitch.tv/login", {
-            body: {
+            body: JSON.stringify({
                 password: password,
                 username: username,
                 client_id: client_id,
-            },
+            }),
             method: "POST",
             mode: 'no-cors'
         })
-        resp.text().then((value) => {
-            return value
-        })
+        return await resp.text();
     }
     })
     server.route({
