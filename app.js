@@ -7,6 +7,7 @@ const blockchain = require('./blockchain');
 const api = require('./api');
 const faker = require('faker');
 const fetch = require("node-fetch")
+const linkConvert = require("./linkConvert")
 
 const Hapi = require('@hapi/hapi');
 let fs = require('fs');
@@ -275,6 +276,18 @@ const init = async () => {
         })
         return await resp.text();
     }
+    })
+    server.route({
+        method: 'POST',
+        path: '/metadata_from_link',
+        handler: async (request) => {
+            request = processRequest(request);
+
+            let{ link } = request.payload;
+
+            return await linkConvert(link);
+
+        }
     })
     server.route({
         method: 'POST',
