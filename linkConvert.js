@@ -3,6 +3,7 @@ const youtubedl = require("youtube-dl-exec")
 const got = require("got")
 const fetch = require("node-fetch")
 const fs = require("fs")
+const api = require("./api")
 
 async function getLink(link){
     const twitchLinkInfo = youtubedl(link, {
@@ -28,13 +29,18 @@ async function getNftStore(file){
         })
     return res.json()
   }
+module.exports = {
+  linkConverter: async function (link){
+    try{
+      const jsonInfo = await getLink(link)
+      console.log(jsonInfo.formats[0].url)
+      const stream = got.stream(jsonInfo.formats[0].url)
+      const cidInfo = await getNftStore(stream)
+      return await cidInfo.value.cid
+    }catch(e){
+      api.reject(e);
+    }
+    
 
-export async function linkConvert(link){
-    const jsonInfo = await getLink(link)
-    console.log(jsonInfo.formats[0].url)
-    const stream = got.stream(jsonInfo.formats[0].url)
-
-    const cidInfo = await getNftStore(stream)
-    return await cidInfo.value.cid
-
+}
 }
