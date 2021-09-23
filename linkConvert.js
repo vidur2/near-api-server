@@ -30,6 +30,9 @@ async function getNftStore(file){
     return res.json()
   }
 module.exports = {
+  /** 
+  *@return {string}
+  */
   linkConverter: async function (link){
     try{
       const jsonInfo = await getLink(link)
