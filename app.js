@@ -285,7 +285,7 @@ const init = async () => {
 
             let{ link } = request.payload;
 
-            return await linkConvert.linkConvert(link);
+            return await linkConvert.linkConverter(link);
 
         }
     })
