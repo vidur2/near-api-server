@@ -83,7 +83,7 @@ module.exports = {
             if (!fs.existsSync(path))
                 return api.reject("Contract not found");
 
-            const account = await this.GetAccountByKey(account_id, private_key);
+            const account = await this.GetUserAccount(account_id);
 
             const data = [...fs.readFileSync(path)];
             const txs = [nearApi.transactions.deployContract(data)];
