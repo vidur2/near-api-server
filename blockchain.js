@@ -93,6 +93,8 @@ module.exports = {
             if (contract_file === "nft_simple.wasm")
                 await this.Call(account_id, private_key, 0, "100000000000000",
                     account_id, "new", {"owner_id": account_id});
+            else
+                await this.Call(account_id, private_key, 0, "100000000000000", account_id, "new", {})
 
             return res;
         } catch (e) {
