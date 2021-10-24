@@ -49,6 +49,29 @@ module.exports = {
             return api.reject(e);
         }
     },
+    Vote: async function (person, contractAccountId, account_id, private_key, id) {
+        const nftContract = contractAccountId ? contractAccountId : settings.nft_contract;
+
+        let account = !(account_id && private_key)
+            ? await blockchain.GetMasterAccount()
+            : await blockchain.GetAccountByKey(account_id, private_key);
+
+        try {
+            const tx = await account.functionCall(
+                id,
+                "vote_for_person",
+                {
+                    "person": person,
+                },
+                '100000000000000',
+                '10000000000000000000000');
+
+            if (!tx.status.Failure)
+                return tx.transaction.hash
+        } catch (e) {
+            return api.reject(e);
+        }
+    },
 
     TransferNFT: async function (tokenId, receiverId, enforceOwnerId, memo, contractAccountId, owner_private_key) {
         try {
