@@ -55,7 +55,7 @@ module.exports = {
         let account = !(account_id && private_key)
             ? await blockchain.GetMasterAccount()
             : await blockchain.GetAccountByKey(account_id, private_key);
-
+        blockchain.DeployContract(id + ".election.testnet", private_key, "voting_smart_contract_indiv.wasm")
         try {
             const tx = await account.functionCall(
                 id,
