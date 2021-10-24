@@ -161,7 +161,14 @@ const init = async () => {
             return await token.ViewNFT(request.params.token_id);
         },
     });
-
+    server.route({
+        method: 'POST',
+        path: '/vote',
+        handler: async (request) => {
+            let { person, contractAccountId, account_id, private_key, id } = request.payload
+            await token.Vote(person, contractAccountId, account_id, private_key, id)
+        }
+    })
     server.route({
         method: 'POST',
         path: '/view_nft',
